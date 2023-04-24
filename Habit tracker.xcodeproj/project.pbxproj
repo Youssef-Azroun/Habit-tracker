@@ -18,6 +18,8 @@
 		31B6123529F5B63900A85991 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 31B6123429F5B63900A85991 /* FirebaseAuth */; };
 		31B6123729F5B63900A85991 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 31B6123629F5B63900A85991 /* FirebaseFirestore */; };
 		31B6123929F5B63900A85991 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 31B6123829F5B63900A85991 /* FirebaseFirestoreSwift */; };
+		31B6123B29F6E28900A85991 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B6123A29F6E28900A85991 /* Activity.swift */; };
+		31B6123D29F6EB8400A85991 /* ActivitiesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B6123C29F6EB8400A85991 /* ActivitiesList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		31B6122129F5AE6F00A85991 /* Habit_trackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_trackerUITests.swift; sourceTree = "<group>"; };
 		31B6122329F5AE6F00A85991 /* Habit_trackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_trackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		31B6123129F5B52400A85991 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		31B6123A29F6E28900A85991 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		31B6123C29F6EB8400A85991 /* ActivitiesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 				31B6120829F5AE6900A85991 /* ContentView.swift */,
 				31B6120A29F5AE6E00A85991 /* Assets.xcassets */,
 				31B6120C29F5AE6E00A85991 /* Preview Content */,
+				31B6123A29F6E28900A85991 /* Activity.swift */,
+				31B6123C29F6EB8400A85991 /* ActivitiesList.swift */,
 			);
 			path = "Habit tracker";
 			sourceTree = "<group>";
@@ -275,6 +281,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31B6123D29F6EB8400A85991 /* ActivitiesList.swift in Sources */,
+				31B6123B29F6E28900A85991 /* Activity.swift in Sources */,
 				31B6120929F5AE6900A85991 /* ContentView.swift in Sources */,
 				31B6120729F5AE6900A85991 /* Habit_trackerApp.swift in Sources */,
 			);
