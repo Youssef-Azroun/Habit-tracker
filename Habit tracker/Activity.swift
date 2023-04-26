@@ -13,4 +13,5 @@ struct Activity: Codable, Identifiable {
     @DocumentID var id: String?
     var name: String
     var done: Bool = false
+    var streak: Int = 0
 }

@@ -30,6 +30,11 @@ class ActivitiesList : ObservableObject {
         
         if let id = activity.id{
             activityRef.document(id).updateData(["done" : !activity.done])
+            if !activity.done{
+                activityRef.document(id).updateData(["streak" : FieldValue.increment(Int64(1))])
+            }else{
+                activityRef.document(id).updateData(["streak" : FieldValue.increment(Int64(-1))])
+            }
         }
     }
     
