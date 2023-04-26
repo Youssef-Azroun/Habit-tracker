@@ -116,7 +116,9 @@ struct RawView: View {
     
     var body: some View {
         HStack{
-            Text(activity.name)
+            Text("\(activity.name): ")
+            Spacer()
+            Text("\(activity.streak) days streak.")
             Spacer()
             Button(action: {
                 vm.toggel(activity: activity)
