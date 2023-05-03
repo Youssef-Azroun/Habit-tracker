@@ -7,6 +7,8 @@
 
 import Foundation
 import Firebase
+import SwiftUI
+import FirebaseFirestoreSwift
 
 class ActivitiesList : ObservableObject {
     @Published var activities = [Activity]()
@@ -27,13 +29,21 @@ class ActivitiesList : ObservableObject {
     func toggel (activity: Activity) {
         guard let user = auth.currentUser else{return}
         let activityRef = db.collection("Users").document(user.uid).collection("Activities")
+        let today = Calendar.current.startOfDay(for: Date())
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
         
         if let id = activity.id{
             activityRef.document(id).updateData(["done" : !activity.done])
-            if !activity.done{
-                activityRef.document(id).updateData(["streak" : FieldValue.increment(Int64(1))])
-            }else{
-                activityRef.document(id).updateData(["streak" : FieldValue.increment(Int64(-1))])
+            if !activity.done && activity.latestDate == today{
+                activityRef.document(id).updateData(["streak": FieldValue.increment(Int64(1))])
+            }else if activity.done && activity.latestDate == today {
+                activityRef.document(id).updateData(["streak": FieldValue.increment(Int64(-1))])
+            } else if (!activity.done && activity.latestDate < yesterday){
+                activityRef.document(id).updateData(["streak": 1])
+                activityRef.document(id).updateData(["latestDate": today])
+            }else if (!activity.done && activity.latestDate >= yesterday) {
+                activityRef.document(id).updateData(["streak": FieldValue.increment(Int64(1))])
+                activityRef.document(id).updateData(["latestDate": today])
             }
         }
     }
@@ -41,7 +51,8 @@ class ActivitiesList : ObservableObject {
     func saveToFireStore(activityName: String) {
         guard let user = auth.currentUser else{return}
         let activityRef = db.collection("Users").document(user.uid).collection("Activities")
-        let activity = Activity(name: activityName)
+        let latestDate = Calendar.current.startOfDay(for: Date())
+        let activity = Activity(name: activityName, latestDate: latestDate)
         
         do{
           try activityRef.addDocument(from: activity)
@@ -64,11 +75,30 @@ class ActivitiesList : ObservableObject {
                 for document in snapshot.documents{
                     do{
                     let activity = try document.data(as: Activity.self)
+                        self.restartDone(activity: activity)
                         self.activities.append(activity)
                     }catch{
-                        print("Error reading from fireBase")
+                        print("Error reading from fireStore")
                     }
                 }
+            }
+        }
+    }
+    
+    func restartDone(activity: Activity){
+        guard let user = auth.currentUser else{return}
+        let activityRef = db.collection("Users").document(user.uid).collection("Activities")
+        let today = Calendar.current.startOfDay(for: Date())
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        
+        if let id = activity.id {
+            if activity.latestDate < today && activity.latestDate > yesterday{
+                activityRef.document(id).updateData(["done" : false])
+                activityRef.document(id).updateData(["latestDate" : today])
+            }else if activity.latestDate < yesterday {
+                activityRef.document(id).updateData(["streak" : 0])
+                activityRef.document(id).updateData(["done" : false])
+                activityRef.document(id).updateData(["latestDate" : today])
             }
         }
     }
